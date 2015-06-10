@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etUrl"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_alignBottom="@+id/btLoadPodcast"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/btLoadPodcast"
+        android:hint="@string/home_url_hint"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btLoadPodcast"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="@string/home_button_load"
+        android:layout_marginTop="5dp"
+
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etUrl"
+        android:id="@+id/rlTitle">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tvTitle"
+
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/ivPodcastLogo"
+
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ivPodcastLogo"
+           android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+
+
+            />
+        </RelativeLayout>
+
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvChapters"
+        android:layout_below="@+id/rlTitle"
+        android:layout_marginTop="5dp"
+        android:divider="@color/blue"
+        android:choiceMode="singleChoice"
+        android:listSelector="@color/accent_material_light"
+        android:dividerHeight="1dp"
+
+        ></ListView>
+
+
+
+</RelativeLayout>

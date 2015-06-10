@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'android-apt'
+def AAVersion = '3.3.1'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.alfco.myrsspodcast"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile ('com.octo.android.robospice:robospice-spring-android:1.4.14'){
+        exclude group: 'org.apache.commons', module: 'commons-io'
+    }
+    compile('org.simpleframework:simple-xml:2.7.1') {
+        exclude module: 'xpp3'
+        exclude group: 'stax'
+    }
+
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        // if you have multiple outputs (when using splits), you may want to have other index than 0
+        resourcePackageName 'com.alfco.myrsspodcast'
+        // You can set optional annotation processing options here, like these commented options:
+        // logLevel 'INFO'
+        // logFile '/var/log/aa.log'
+    }
+}
