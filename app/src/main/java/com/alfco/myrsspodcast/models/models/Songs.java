@@ -25,6 +25,8 @@ public class Songs {
     private String duration;
     @Element(name = "image")
     private Image image;
+    @Element(name="enclosure")
+    private Url url;
 
 
 
@@ -74,5 +76,13 @@ public class Songs {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public Url getUrl() {
+        return url;
+    }
+
+    public void setUrl(Url url) {
+        this.url = url;
     }
 }

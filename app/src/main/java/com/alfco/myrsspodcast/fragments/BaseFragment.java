@@ -2,10 +2,13 @@ package com.alfco.myrsspodcast.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.View;
 
+import com.alfco.myrsspodcast.R;
 import com.alfco.myrsspodcast.restclient.service.MyRssPodcastService;
 import com.alfco.myrsspodcast.tools.Interfaces.NetworkActions;
+import com.alfco.myrsspodcast.tools.Interfaces.TempFragmentListener;
 import com.alfco.myrsspodcast.tools.Util;
 import com.octo.android.robospice.SpiceManager;
 
@@ -16,14 +19,17 @@ public abstract class BaseFragment extends Fragment {
 
 
     private NetworkActions networkListener;
+    private TempFragmentListener fragmentListener;
+    private String titleActionBar;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try{
             networkListener=(NetworkActions)activity;
+            fragmentListener=(TempFragmentListener) activity;
         }catch (ClassCastException e){
-            leh("Must implement the interface");
+            leh("Must implement the interfaces");
         }
     }
 
@@ -95,6 +101,9 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    public String getTitle() {
+        return titleActionBar != null ? titleActionBar :getString(R.string.app_name);
+    }
     protected boolean isEmpty(String string){
         return Util.isEmpty(string);
     }
@@ -134,6 +143,9 @@ public abstract class BaseFragment extends Fragment {
     protected void showLoading(boolean show){
         if(networkListener!=null)
             networkListener.showLoader(show);
+    }
+    protected void insertTemporal(String tag,Bundle args){
+        fragmentListener.inserTemporalFragmnet(tag,args);
     }
 
 

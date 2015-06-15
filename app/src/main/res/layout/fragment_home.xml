@@ -5,9 +5,11 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minLines="3"
         android:id="@+id/etUrl"
         android:textSize="15sp"
         android:textColor="@color/black"
+        android:gravity="center_vertical"
         android:layout_alignBottom="@+id/btLoadPodcast"
         android:layout_marginTop="5dp"
         android:layout_toLeftOf="@+id/btLoadPodcast"

@@ -2,6 +2,7 @@ package com.alfco.myrsspodcast.fragments;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.alfco.myrsspodcast.tools.Constants;
 
 import com.alfco.myrsspodcast.tools.Interfaces.OnPlayButtonListener;
 import com.alfco.myrsspodcast.tools.Util;
+import com.google.gson.Gson;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.squareup.picasso.Picasso;
@@ -54,6 +56,7 @@ public class FragmentHome extends BaseFragment implements RequestListener<byte[]
     private int playbackPosition=0;
     private String currentUrl;
     private boolean isPrepared=true;
+    Bundle args;
 
     @StringRes(R.string.home_invalid_url)
             String invalidUrl;
@@ -99,7 +102,7 @@ public class FragmentHome extends BaseFragment implements RequestListener<byte[]
 
     /**********************************************************************************************
      *
-     *                                      Activity's lifecycle
+     *                                      Fragment's lifecycle
      *
      **********************************************************************************************/
     @Override
@@ -116,18 +119,28 @@ public class FragmentHome extends BaseFragment implements RequestListener<byte[]
     }
     @ItemClick(R.id.lvChapters)
     void reproduce(Songs song){
-        if(!song.getGuid().isEmpty()){
+        //
 
-            if(song.getGuid().equalsIgnoreCase(currentUrl)) {
-                if(!player.isPlaying())
-                    restartMedia();
-                else
-                    pauseMedia();
+        if(reproduceType(song)) {
+
+            if (!song.getGuid().isEmpty()) {
+
+                if (song.getGuid().equalsIgnoreCase(currentUrl)) {
+                    if (!player.isPlaying())
+                        restartMedia();
+                    else
+                        pauseMedia();
+                } else {
+                    currentUrl = song.getGuid();
+                    playMedia(currentUrl, player);
+                }
             }
-            else {
-                currentUrl=song.getGuid();
-                playMedia(currentUrl,player);
-            }
+        }else{
+            Bundle args=new Bundle();
+            args.putString(Constants.KEY_SONG,new Gson().toJson(song));
+            insertTemporal(Constants.TAG_FRAG_DETAIL,args);
+
+
         }
 
     }
@@ -272,6 +285,25 @@ public class FragmentHome extends BaseFragment implements RequestListener<byte[]
                 e.printStackTrace();
             }
         }
+    }
+    private boolean reproduceType(Songs song){
+        String type="";
+        boolean isAudio=false;
+        if(song.getUrl().getType()!=null&&!song.getUrl().getType().isEmpty())
+            type=song.getUrl().getType();
+        switch(type){
+            case Constants.typeAudioMpeg:
+            case Constants.typeAudioM4a:
+                isAudio=true;
+                break;
+            case Constants.typeVideoM4v:
+            case Constants.typeVideoMp4:
+                isAudio=false;
+                break;
+
+
+        }
+        return isAudio;
     }
     /**********************************************************************************************
      *

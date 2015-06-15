@@ -13,4 +13,10 @@
     <string name="detail_bt_pause">Pause</string>
     <string name="detail_bt_stop">Stop</string>
     <string name="row_duration">Duration: </string>
+
+    <string name="home_exit_dialog_message">Deseas salir?</string>
+    <string name="home_exit_ok">Si</string>
+    <string name="home_exit_cancel">No</string>
+
+    <string name="detail_error_playing">Hubo un problema con la reproducción el video.</string>
 </resources>
